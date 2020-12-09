@@ -16,6 +16,9 @@ export default function MainScreen() {
         <div style={{ marginTop: 25 }}>
           <EngineEntity />
         </div>
+        <h5 style={{ paddingTop: 50 }}>Opened Projects</h5>
+        <hr color={defaultColors.FONT_COLOR} />
+        <div></div>
       </div>
     </div>
   );
