@@ -1,22 +1,26 @@
 import React from "react";
 import { MemoryRouter, Route, Switch } from "react-router-dom";
+import NavigationBar from "./components/NavigationBar";
 import { Routes } from "./routes";
 import DownloadScreen from "./screens/DownloadScreen";
 import MainScreen from "./screens/MainScreen";
 
 export default function App() {
   return (
-    <div>
-      <MemoryRouter>
-        <Switch>
-          <Route path={Routes.mainScreen}>
-            <MainScreen />
-          </Route>
-          <Route path={Routes.downloadScreen}>
-            <DownloadScreen />
-          </Route>
-        </Switch>
-      </MemoryRouter>
-    </div>
+    <MemoryRouter>
+      <div style={{ display: "flex", height: "100%" }}>
+        <NavigationBar />
+        <div style={{ width: "100%" }}>
+          <Switch>
+            <Route exact path={Routes.mainScreen}>
+              <MainScreen />
+            </Route>
+            <Route exact path={Routes.downloadScreen}>
+              <DownloadScreen />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </MemoryRouter>
   );
 }

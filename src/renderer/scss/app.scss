@@ -3,4 +3,10 @@
 body {
   background-color: $DEFAULT_BACKGROUND_COLOR;
   color: $FONT_COLOR;
+  min-height: 100%;
+  user-select: none;
+}
+
+#root {
+  height: 100%;
 }

@@ -9,7 +9,7 @@ export default function EngineEntity() {
     <div
       style={{
         backgroundColor: defaultColors.FONT_COLOR,
-        height: "90px",
+        height: "100px",
         width: "250px",
         color: defaultColors.DEFAULT_BACKGROUND_COLOR,
         borderRadius: 10,
@@ -22,6 +22,10 @@ export default function EngineEntity() {
           2.1.2-rc Beta
         </span>
       </p>
+      <hr
+        color={defaultColors.DEFAULT_BACKGROUND_COLOR}
+        style={{ padding: 0, margin: 0 }}
+      />
       <div
         style={{
           display: "flex",

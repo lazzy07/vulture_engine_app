@@ -3,10 +3,23 @@
 .buttonalt:hover {
   background-color: $DEFAULT_BACKGROUND_COLOR;
   color: $FONT_COLOR;
-  transition: all 0.5s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 .button:hover {
   background-color: $FONT_COLOR;
   color: $DEFAULT_BACKGROUND_COLOR;
+  transition: all 0.3s ease-in-out;
+}
+
+.selected {
+  background-color: $FONT_COLOR;
+  color: $DEFAULT_BACKGROUND_COLOR;
+  transition: all 0.3s ease-in-out;
+}
+
+.selectedButton:hover {
+  background-color: $DEFAULT_BACKGROUND_COLOR;
+  color: $FONT_COLOR;
+  transition: all 0.3s ease-in-out;
 }
