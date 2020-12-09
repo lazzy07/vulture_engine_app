@@ -1,0 +1,12 @@
+@import "./colors.scss";
+
+.buttonalt:hover {
+  background-color: $DEFAULT_BACKGROUND_COLOR;
+  color: $FONT_COLOR;
+  transition: all 0.5s ease-in-out;
+}
+
+.button:hover {
+  background-color: $FONT_COLOR;
+  color: $DEFAULT_BACKGROUND_COLOR;
+}

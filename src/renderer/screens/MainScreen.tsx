@@ -1,12 +1,22 @@
-import React from 'react'
-import Image from "../img/logo_with_text_g.png";
+import React from "react";
+import EngineEntity from "../components/EngineEntity";
+import { defaultColors } from "../constants/colors";
 
 export default function MainScreen() {
   return (
     <div>
-      <div style={{ width: "40vw", display: "flex", justifyContent: "center" }}>
-        <img draggable={false} style={{ width: "100%" }} src={Image} alt="" />
+      <div
+        style={{
+          padding: 20,
+          paddingTop: 30,
+        }}
+      >
+        <h5>Available Engine Versions</h5>
+        <hr color={defaultColors.FONT_COLOR} />
+        <div style={{ marginTop: 25 }}>
+          <EngineEntity />
+        </div>
       </div>
     </div>
-  )
+  );
 }
