@@ -1,0 +1,12 @@
+[
+  {
+    "version": "2.0.0",
+    "rendering_engine": "2.0.0",
+    "audio_engine": "2.0.0",
+    "physics_engine": "2.0.0",
+    "description": "First edition of Vulture Engine",
+    "improvements": ["New UI", "Scripting with JavaScript"],
+    "bugfixes": ["A memory leak fixed"],
+    "known_bugs": ["Not finished yet"]
+  }
+]
