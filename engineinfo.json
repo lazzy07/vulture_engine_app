@@ -7,6 +7,11 @@
     "description": "First edition of Vulture Engine",
     "improvements": ["New UI", "Scripting with JavaScript"],
     "bugfixes": ["A memory leak fixed"],
-    "known_bugs": ["Not finished yet"]
+    "known_bugs": ["Not finished yet"],
+    "download": {
+      "mac": "",
+      "windows": "",
+      "linux": ""
+    }
   }
 ]

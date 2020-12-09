@@ -3,7 +3,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
 import React, { useEffect, useState } from "react";
 import AvailableEngine from "../components/AvailableEngine";
-import { VULTURE2_RELEASES_URL } from "../constants/urls";
+import { ENGINE_DATA_URL } from "../constants/urls";
+import { EngineItem } from "../interfaces/EngineItem";
 import Ripple from "../svg/ripple.svg";
 
 export default function DownloadScreen() {
@@ -11,19 +12,15 @@ export default function DownloadScreen() {
   const [loading, setLoading] = useState<string>("loading");
 
   useEffect(() => {
-    Axios.get(VULTURE2_RELEASES_URL)
+    Axios.get(ENGINE_DATA_URL)
       .then((response) => {
-        setLoading("done");
         const data = response.data;
-
         let versions: EngineItem[] = [];
         data.forEach((element: any) => {
-          versions.push({
-            version: element.tag_name,
-            isInstalled: false,
-          });
+          versions.push({ ...element, isInstalled: false });
         });
         setEngineVersions(versions);
+        setLoading("done");
       })
       .catch((err) => {
         setLoading("error");
@@ -74,7 +71,7 @@ export default function DownloadScreen() {
 
   const renderContent = () => {
     return (
-      <div style={{ overflowY: "auto", height: "100%" }}>
+      <div style={{ overflowY: "auto", height: "100%", padding: 50 }}>
         {engineVersions.map((ele, index) => {
           return <AvailableEngine item={ele} key={index} />;
         })}

@@ -2,6 +2,7 @@ import { faBoxOpen, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { defaultColors } from "../constants/colors";
+import { EngineItem } from "../interfaces/EngineItem";
 
 interface Props {
   item: EngineItem;
