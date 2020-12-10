@@ -1,3 +1,7 @@
+import { remote } from "electron";
+const { app } = remote;
+import Path from "path";
+
 export const VULTURE2_RELEASES_URL =
   "https://api.github.com/repos/glfw/glfw/releases";
 
@@ -7,3 +11,8 @@ export const ENGINE_DATA_URL =
 export const RELEASE_DATA_URL = (id: string) => {
   return `https://api.github.com/repos/glfw/glfw/releases/assets/${id}`;
 };
+
+export const DEFAULT_APP_DATA_PATH = Path.join(
+  app.getPath("appData"),
+  "vulture_engine_2"
+);

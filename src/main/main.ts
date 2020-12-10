@@ -1,5 +1,7 @@
 import { app, BrowserWindow } from "electron";
 import * as Splashscreen from "@trodi/electron-splashscreen";
+import fs from "fs";
+import Path from "path";
 
 declare var MAIN_WINDOW_WEBPACK_ENTRY: any;
 let store: any;
@@ -22,6 +24,15 @@ const mainOptions: Electron.BrowserWindowConstructorOptions = {
 
 const initializeApp = () => {
   console.log("Current environment: " + process.env.NODE_ENV);
+  const DEFAULT_APP_DATA_PATH = Path.join(
+    app.getPath("appData"),
+    "vulture_engine_2"
+  );
+  if (!fs.existsSync(DEFAULT_APP_DATA_PATH)) {
+    console.log("DEFAULT_APP_PATH_CREATED");
+    fs.mkdirSync(DEFAULT_APP_DATA_PATH, { recursive: true });
+  }
+
   const config: Splashscreen.Config = {
     windowOpts: mainOptions,
     templateUrl: `${__dirname}/loading/loading.html`,
