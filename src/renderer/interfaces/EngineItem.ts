@@ -9,6 +9,7 @@ export interface EngineItem {
   known_bugs: string[];
   download: DownloadLinks;
   isInstalled: boolean;
+  isNewest: boolean;
 }
 
 export interface DownloadLinks {
