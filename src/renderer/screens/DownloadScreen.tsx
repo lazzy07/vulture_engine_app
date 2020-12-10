@@ -1,17 +1,29 @@
 import { faExclamation } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router-dom";
 import AvailableEngine from "../components/AvailableEngine";
 import { ENGINE_DATA_URL } from "../constants/urls";
+import { InstallerContext } from "../contexts/InstallerContext";
 import { EngineItem } from "../interfaces/EngineItem";
 import Ripple from "../svg/ripple.svg";
 
-export default function DownloadScreen() {
-  const [engineVersions, setEngineVersions] = useState<EngineItem[]>([]);
+interface Props {
+  engineVersions: EngineItem[];
+  setEngineVersions: (versions: EngineItem[]) => void;
+}
+
+export default function DownloadScreen(props: Props) {
   const [loading, setLoading] = useState<string>("loading");
+  const history = useHistory();
+  const { installing } = useContext(InstallerContext);
 
   useEffect(() => {
+    if (installing) {
+      history.push("/download/" + installing);
+    }
+
     Axios.get(ENGINE_DATA_URL)
       .then((response) => {
         const data = response.data;
@@ -19,7 +31,7 @@ export default function DownloadScreen() {
         data.forEach((element: any) => {
           versions.push({ ...element, isInstalled: false });
         });
-        setEngineVersions(versions);
+        props.setEngineVersions(versions);
         setLoading("done");
       })
       .catch((err) => {
@@ -72,7 +84,7 @@ export default function DownloadScreen() {
   const renderContent = () => {
     return (
       <div style={{ overflowY: "auto", height: "100%", padding: 50 }}>
-        {engineVersions.map((ele, index) => {
+        {props.engineVersions.map((ele, index) => {
           return <AvailableEngine item={ele} key={index} />;
         })}
       </div>

@@ -1,6 +1,7 @@
 import { faBoxOpen, faDownload } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
+import { useHistory } from "react-router-dom";
 import { defaultColors } from "../constants/colors";
 import { EngineItem } from "../interfaces/EngineItem";
 
@@ -9,10 +10,15 @@ interface Props {
 }
 
 export default function AvailableEngine(props: Props) {
+  const history = useHistory();
   const renderListItems = (items: string[]) => {
     return items.map((ele, index) => {
       return <li key={index}>{ele}</li>;
     });
+  };
+
+  const onClick = () => {
+    history.push("/download/" + props.item.version);
   };
 
   return (
@@ -26,7 +32,13 @@ export default function AvailableEngine(props: Props) {
           padding: 15,
         }}
       >
-        <div>
+        <div
+          style={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "flex-end",
+          }}
+        >
           <p
             style={{ fontWeight: "bold", fontSize: 24, padding: 0, margin: 0 }}
           >
@@ -38,13 +50,13 @@ export default function AvailableEngine(props: Props) {
           <p
             style={{
               fontWeight: "bold",
-              fontSize: 22,
+              fontSize: 18,
               padding: 0,
               margin: 0,
               color: defaultColors.IMPORTANT_BACKGROUND_COLOR,
             }}
           >
-            {props.item.isNewest ? "New" : undefined}
+            {props.item.isNewest ? "Newest Version" : undefined}
           </p>
         </div>
         <hr
@@ -123,6 +135,7 @@ export default function AvailableEngine(props: Props) {
             </div>
           ) : (
             <div
+              onClick={onClick}
               style={{
                 margin: 5,
                 padding: 10,
