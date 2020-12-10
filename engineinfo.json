@@ -9,9 +9,9 @@
     "bugfixes": ["A memory leak fixed"],
     "known_bugs": ["Not finished yet"],
     "download": {
-      "mac": "",
-      "windows": "",
-      "linux": ""
+      "mac": "17447504",
+      "windows": "17447505",
+      "linux": "17447506"
     },
     "isNewest": true
   }

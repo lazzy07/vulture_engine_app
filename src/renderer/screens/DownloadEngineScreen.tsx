@@ -17,10 +17,18 @@ export default function DownloadEngineScreen(props: Props) {
   const { setInstalling, fileSize, setFileSize } = useContext(InstallerContext);
   const history = useHistory();
 
+  let currentVersion: EngineItem | undefined;
+
+  for (const i of props.engineVersions) {
+    if (i.version === version) {
+      currentVersion = i;
+    }
+  }
+
   useEffect(() => {
     setInstalling(version);
 
-    Axios.get(RELEASE_DATA_URL(version))
+    Axios.get(RELEASE_DATA_URL(currentVersion!.download.windows))
       .then((response) => {
         console.log(response.data.assets[0].size);
       })
@@ -33,14 +41,6 @@ export default function DownloadEngineScreen(props: Props) {
     setInstalling("");
     history.push("/download");
   };
-
-  let currentVersion: EngineItem | undefined;
-
-  for (const i of props.engineVersions) {
-    if (i.version === version) {
-      currentVersion = i;
-    }
-  }
 
   return (
     <div style={{ padding: 30 }}>
@@ -68,9 +68,20 @@ export default function DownloadEngineScreen(props: Props) {
           {currentVersion?.rendering_engine}
         </span>
       </div>
-      <div>
-        <Inputbox />
+      <div style={{ paddingTop: 10, paddingBottom: 30, paddingRight: 40 }}>
+        <Inputbox
+          onChange={(key, val) => {
+            console.log(key, val);
+          }}
+          id="path"
+          title="Install to : "
+          value="C:/home"
+        />
+        <div style={{ display: "flex", justifyContent: "flex-end" }}>
+          <Button onClick={onClick} title="Browse" icon={faDownload} />
+        </div>
       </div>
+      <div style={{ fontWeight: "bolder" }}>Size : {}</div>
       <div style={{ display: "flex" }}>
         <Button
           onClick={onClick}
