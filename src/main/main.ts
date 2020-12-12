@@ -28,9 +28,21 @@ const initializeApp = () => {
     app.getPath("appData"),
     "vulture_engine_2"
   );
+
+  const DEFAULT_SETTINGS_PATH = Path.join(
+    app.getPath("appData"),
+    "vulture_engine_2",
+    "settings"
+  );
+
   if (!fs.existsSync(DEFAULT_APP_DATA_PATH)) {
     console.log("DEFAULT_APP_PATH_CREATED");
     fs.mkdirSync(DEFAULT_APP_DATA_PATH, { recursive: true });
+  }
+
+  if (!fs.existsSync(DEFAULT_SETTINGS_PATH)) {
+    console.log("DEFAULT_SETTINGS_CREATED");
+    fs.mkdirSync(DEFAULT_SETTINGS_PATH, { recursive: true });
   }
 
   const config: Splashscreen.Config = {

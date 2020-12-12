@@ -7,9 +7,12 @@ import { Routes } from "./routes";
 import DownloadEngineScreen from "./screens/DownloadEngineScreen";
 import DownloadScreen from "./screens/DownloadScreen";
 import MainScreen from "./screens/MainScreen";
+import { EngineData } from "./settings/EngineData";
 
 export default function App() {
   const [engineVersions, setEngineVersions] = useState<EngineItem[]>([]);
+  const engineData = new EngineData();
+  engineData.loadEngineData();
 
   return (
     <MemoryRouter>

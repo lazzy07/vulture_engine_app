@@ -16,3 +16,9 @@ export const DEFAULT_APP_DATA_PATH = Path.join(
   app.getPath("appData"),
   "vulture_engine_2"
 );
+
+export const DEFAULT_SETTINGS_PATH = Path.join(
+  app.getPath("appData"),
+  "vulture_engine_2",
+  "settings"
+);

@@ -2,9 +2,14 @@ import React from "react";
 import { defaultColors } from "../constants/colors";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
+import { EngineItem } from "../interfaces/EngineItem";
 import "../scss/button.scss";
 
-export default function EngineEntity() {
+interface Props {
+  item: EngineItem;
+}
+
+export default function EngineEntity(props: Props) {
   return (
     <div
       style={{
@@ -19,7 +24,7 @@ export default function EngineEntity() {
       <p style={{ fontWeight: "bold", fontSize: 18, padding: 0, margin: 0 }}>
         Vulture{" "}
         <span style={{ fontSize: 26, fontWeight: "bolder" }}>
-          2.1.2-rc Beta
+          {props.item.version}
         </span>
       </p>
       <hr

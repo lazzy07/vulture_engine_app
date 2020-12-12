@@ -8,7 +8,9 @@ import { DEFAULT_APP_DATA_PATH, RELEASE_DATA_URL } from "../constants/urls";
 import { InstallerContext } from "../contexts/InstallerContext";
 import { EngineItem } from "../interfaces/EngineItem";
 import Path from "path";
+import fs from "fs";
 import { remote } from "electron";
+import { defaultColors } from "../constants/colors";
 const { dialog } = remote;
 
 interface Props {
@@ -18,7 +20,6 @@ interface Props {
 export default function DownloadEngineScreen(props: Props) {
   const { version } = useParams<{ version: string }>();
   const {
-    installing,
     setInstalling,
     fileSize,
     setFileSize,
@@ -26,11 +27,19 @@ export default function DownloadEngineScreen(props: Props) {
     setPath,
     isInstalling,
     startInstalling,
+    downloadedDataSize,
+    setEngine,
   } = useContext(InstallerContext);
   const history = useHistory();
   const [currentState, setCurrentState] = useState<string>("loading");
+  const [installUrl, setInstallUrl] = useState<string>("");
+  const [installFileName, setInstallFileName] = useState<string>("");
   let currentVersion: EngineItem | undefined;
-  let installationPath = Path.join(DEFAULT_APP_DATA_PATH, "engines", version);
+  let installationPath = Path.join(
+    DEFAULT_APP_DATA_PATH,
+    "engines",
+    "vulture" + version
+  );
 
   for (const i of props.engineVersions) {
     if (i.version === version) {
@@ -43,8 +52,11 @@ export default function DownloadEngineScreen(props: Props) {
     setPath(installationPath);
     Axios.get(RELEASE_DATA_URL(currentVersion!.download.windows))
       .then((response) => {
+        setEngine(currentVersion!);
         setCurrentState("done");
         setFileSize(response.data.size);
+        setInstallFileName(response.data.name);
+        setInstallUrl(response.data.browser_download_url);
       })
       .catch((err) => {
         setCurrentState("error");
@@ -57,13 +69,24 @@ export default function DownloadEngineScreen(props: Props) {
     history.push("/download");
   };
 
-  const openFolder = () => {
-    dialog.showOpenDialog({
+  const openFolder = async () => {
+    const res = await dialog.showOpenDialog({
       title: "Choose folder to install",
       buttonLabel: "Select Folder",
       defaultPath: installationPath,
       properties: ["createDirectory", "openDirectory"],
     });
+
+    if (!res.canceled) setPath(res.filePaths[0]);
+  };
+
+  const onClickInstall = () => {
+    try {
+      fs.mkdirSync(path, { recursive: true });
+      startInstalling(installUrl, installFileName);
+    } catch (err) {
+      dialog.showErrorBox("Invalid path", err.message);
+    }
   };
 
   return (
@@ -111,21 +134,46 @@ export default function DownloadEngineScreen(props: Props) {
           />
         </div>
       </div>
-      <div style={{ fontWeight: "bolder", paddingTop: 20, paddingBottom: 20 }}>
-        File size :
-        <span style={{ fontWeight: "bolder", fontSize: 22 }}>
-          {" "}
-          {currentState === "loading"
-            ? "Fetching data.."
-            : currentState === "error"
-            ? "Error, please check your internet connection"
-            : (fileSize / (1024 * 1024)).toFixed(2) + " MB"}
-        </span>
+      <div style={{ paddingBottom: 20 }}>
+        <div style={{ fontWeight: "bolder", paddingBottom: 20 }}>
+          File size :
+          <span style={{ fontWeight: "bolder", fontSize: 22 }}>
+            {" "}
+            {currentState === "loading"
+              ? "Fetching data.."
+              : currentState === "error"
+              ? "Error, please check your internet connection"
+              : (fileSize / (1024 * 1024)).toFixed(2) + " MB"}
+          </span>
+        </div>
+        {isInstalling && (
+          <>
+            <div
+              style={{
+                border: "1px solid" + defaultColors.FONT_COLOR,
+                marginRight: 30,
+              }}
+            >
+              <div
+                style={{
+                  width: (downloadedDataSize / fileSize) * 100 + "%",
+                  height: "20px",
+                  backgroundColor: defaultColors.FONT_COLOR,
+                }}
+              ></div>
+            </div>
+            <div>
+              <div>
+                {((downloadedDataSize / fileSize) * 100).toFixed(0)}% Downloaded
+              </div>
+            </div>
+          </>
+        )}
       </div>
       <div style={{ display: "flex" }}>
         <Button
           disabled={currentState !== "done" || isInstalling}
-          onClick={onClick}
+          onClick={onClickInstall}
           title="Download and Install"
           icon={faDownload}
         />
