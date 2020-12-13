@@ -22,3 +22,8 @@ export const DEFAULT_SETTINGS_PATH = Path.join(
   "vulture_engine_2",
   "settings"
 );
+
+export const DEFAULT_PROJECTS_PATH = Path.join(
+  app.getPath("documents"),
+  "vulture_projects"
+);

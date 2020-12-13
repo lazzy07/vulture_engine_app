@@ -5,18 +5,22 @@ import {
   faHome,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { defaultColors } from "../constants/colors";
+import { ProjectContextData } from "../contexts/ProjectContext";
 import Image from "../img/logo_with_text_g.png";
 
 export default function NavigationBar() {
   const history = useHistory();
   const [active, setActive] = useState<string>("Home");
+  const { isCreating } = useContext(ProjectContextData);
 
   const onSelection = (selected: string, navigation: string) => {
-    setActive(selected);
-    history.push(navigation);
+    if (!isCreating) {
+      setActive(selected);
+      history.push(navigation);
+    }
   };
 
   const renderButton = (
